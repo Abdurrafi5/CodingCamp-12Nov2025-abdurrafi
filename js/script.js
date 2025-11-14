@@ -26,7 +26,6 @@ let lastDeleted=null
 document.body.classList.add(themes[themeIndex])
 renderTodos(todos)
 
-/* FORMAT TANGGAL: DD Bulan YYYY */
 function formatDate(dateStr) {
   const months = [
     "Januari","Februari","Maret","April","Mei","Juni",
