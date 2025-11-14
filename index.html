@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Todo+</title>
+<link rel="icon" type="image/jpg" href="profile.jpg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="title-area">
+      <h1>Todo<span>+</span></h1>
+      <p class="by">By Abdurrafi Firlan Putra</p>
+    </div>
+    <button id="theme-toggle">🎨 Ganti Tema</button>
+  </header>
+
+  <form id="todo-form">
+    <input type="text" id="todo-title" placeholder="Judul tugas..." maxlength="35">
+    <textarea id="todo-desc" placeholder="Deskripsi tugas..." rows="3"></textarea>
+    <input type="date" id="date-input">
+    <button type="submit">➕ Tambah</button>
+  </form>
+
+  <div class="filter-box">
+    <input type="text" id="search-input" placeholder="🔍 Cari tugas...">
+    <select id="filter-status">
+      <option value="all">Semua</option>
+      <option value="pending">⏳ Pending</option>
+      <option value="completed">✅ Selesai</option>
+    </select>
+    <button id="clear-filter">♻️ Reset Filter</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat total" id="total">Total: 0</div>
+    <div class="stat done" id="done">Selesai: 0</div>
+    <div class="stat pending" id="pending">Pending: 0</div>
+  </div>
+
+  <ul id="todo-list"></ul>
+
+  <div id="undo-box" class="undo-box">
+    <span id="undo-text"></span>
+    <button id="undo-btn">↩️ Undo</button>
+  </div>
+
+  <button id="clear-all" class="danger">🗑️ Hapus Semua</button>
+</div>
+
+<footer>
+  <p>By Abdurrafi Firlan Putra</p>
+</footer>
+
+<script src="script.js"></script>
+<audio id="add-sound" src="https://freesound.org/data/previews/524/524976_1219126-lq.mp3"></audio>
+<audio id="done-sound" src="https://freesound.org/data/previews/170/170164_2437358-lq.mp3"></audio>
+<audio id="delete-sound" src="https://freesound.org/data/previews/109/109662_945474-lq.mp3"></audio>
+</body>
+</html>
