@@ -26,6 +26,16 @@ let lastDeleted=null
 document.body.classList.add(themes[themeIndex])
 renderTodos(todos)
 
+/* FORMAT TANGGAL: DD Bulan YYYY */
+function formatDate(dateStr) {
+  const months = [
+    "Januari","Februari","Maret","April","Mei","Juni",
+    "Juli","Agustus","September","Oktober","November","Desember"
+  ]
+  const [year, month, day] = dateStr.split("-")
+  return `${day} ${months[month - 1]} ${year}`
+}
+
 form.addEventListener('submit',e=>{
   e.preventDefault()
   const title=titleInput.value.trim()
@@ -38,7 +48,10 @@ form.addEventListener('submit',e=>{
   addSound.play()
 })
 
-function saveTodos(){localStorage.setItem('todos',JSON.stringify(todos)); renderTodos(todos)}
+function saveTodos(){
+  localStorage.setItem('todos',JSON.stringify(todos))
+  renderTodos(todos)
+}
 
 function renderTodos(list){
   todoList.innerHTML=''
@@ -47,11 +60,12 @@ function renderTodos(list){
     li.draggable=true
     li.dataset.index=i
     li.classList.toggle('completed',todo.status==='completed')
+
     li.innerHTML=`
       <div class="info">
         <h3>${todo.title} <span class="badge ${todo.status}">${todo.status}</span></h3>
         <p>${todo.desc}</p>
-        <small>${todo.date}</small>
+        <small>${formatDate(todo.date)}</small>
       </div>
       <div class="actions">
         <button class="done">✅</button>
@@ -59,6 +73,7 @@ function renderTodos(list){
         <button class="delete">🗑️</button>
       </div>
     `
+
     todoList.appendChild(li)
     setTimeout(()=>li.classList.add('show'),50)
 
@@ -71,8 +86,15 @@ function renderTodos(list){
     editBtn.addEventListener('click',()=>{editTodo(i)})
     delBtn.addEventListener('click',()=>{deleteTodo(i)})
 
-    infoBox.addEventListener('mousedown',()=>{li.style.transform='scale(1.03)';li.style.boxShadow='0 8px 20px rgba(0,0,0,0.3)'})
-    infoBox.addEventListener('mouseup',()=>{li.style.transform='scale(1)';li.style.boxShadow='none'})
+    infoBox.addEventListener('mousedown',()=>{
+      li.style.transform='scale(1.03)'
+      li.style.boxShadow='0 8px 20px rgba(0,0,0,0.3)'
+    })
+
+    infoBox.addEventListener('mouseup',()=>{
+      li.style.transform='scale(1)'
+      li.style.boxShadow='none'
+    })
   })
   addDragDrop()
   updateStats(list)
@@ -129,6 +151,7 @@ function checkAllDone(list){
 
 filterStatus.addEventListener('change',applyFilters)
 searchInput.addEventListener('input',applyFilters)
+
 clearFilter.addEventListener('click',()=>{
   filterStatus.value='all'
   searchInput.value=''
@@ -137,10 +160,15 @@ clearFilter.addEventListener('click',()=>{
 
 function applyFilters(){
   let filtered=todos
-  if(filterStatus.value!=='all') filtered=filtered.filter(t=>t.status===filterStatus.value)
+  if(filterStatus.value!=='all')
+    filtered=filtered.filter(t=>t.status===filterStatus.value)
+
   if(searchInput.value.trim()){
     const q=searchInput.value.toLowerCase()
-    filtered=filtered.filter(t=>t.title.toLowerCase().includes(q)||t.desc.toLowerCase().includes(q))
+    filtered=filtered.filter(t=>
+      t.title.toLowerCase().includes(q)||
+      t.desc.toLowerCase().includes(q)
+    )
   }
   renderTodos(filtered)
 }
